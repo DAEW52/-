@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ส่งข้อมูล</title>
+</head>
+<body>
+  <form id="uploadForm" enctype="multipart/form-data" method="POST" action="http://localhost:3000/upload">
+    <label>หัวข้อ:</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>โซเชียล (@IG, FB):</label><br>
+    <input type="text" name="social"><br><br>
+
+    <label>เบอร์โต๊ะ:</label><br>
+    <input type="text" name="table"><br><br>
+
+    <label>อยากบอกอะไร:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <label>เลือกรูปภาพ:</label><br>
+    <input type="file" name="image" id="image" accept="image/*" required><br><br>
+
+    <button type="submit">ส่งข้อมูล</button>
+  </form>
+
+  <script>
+    document.getElementById("uploadForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch("http://localhost:3000/upload", {
+        method: "POST",
+        body: formData
+      }).then(response => response.text())
+        .then(data => {
+          alert(data);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
